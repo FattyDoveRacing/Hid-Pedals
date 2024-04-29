@@ -15,7 +15,7 @@ class SmoothingManager:#class to manage averaging of past data points to make in
     def update_data(self, xval):
         self.buffer.append(xval)
         if len(self.buffer) > 10:#change this value to change the ammount of smoothing happening!
-            self.buffer.pop(0)  #remove the oldest element if buffer size exceeds 10
+            self.buffer.pop(0)  #remove the oldest element if buffer size exceeds desired smoothing ammount
 
     def smooth(self):
         buffer_sum = sum(self.buffer)
@@ -26,7 +26,7 @@ def map_range(value, from_low, from_high, to_low, to_high):
     current_map = int((value - from_low) * (to_high - to_low) / (from_high - from_low) + to_low)
     if current_map <= -114:#prevent value from exceeding hid limit and crashing
         return -127
-    elif current_map >= 120:
+    elif current_map >= 120:#make input return to 0 when close 
         return 127
     else:
         return current_map
